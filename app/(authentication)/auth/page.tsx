@@ -14,7 +14,8 @@ import Typography from "@/components/ui/typography";
 import { supabaseBrowserClient } from "@/lib/supabase/supabaseClient";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Provider } from "@supabase/supabase-js";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsSlack } from "react-icons/bs";
 import { MdOutlineAutoAwesome } from "react-icons/md";
@@ -23,6 +24,24 @@ import { z } from "zod";
 
 const AuthPage = () => {
   const [isAuth, setIsAuth] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const {
+        data: { session },
+      } = await supabaseBrowserClient.auth.getSession();
+      console.log(session);
+      if (session) {
+        return router.push("/");
+      }
+    };
+
+    getCurrentUser();
+    setIsMounted(true);
+  }, [router]);
 
   const formSchema = z.object({
     email: z
@@ -62,6 +81,10 @@ const AuthPage = () => {
     });
     setIsAuth(false);
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen p-5 grid text-center place-content-center bg-white">
