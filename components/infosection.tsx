@@ -10,15 +10,30 @@ import {
 import { FaArrowDown, FaArrowUp, FaPlus } from "react-icons/fa";
 import Typography from "./ui/typography";
 import CreateChannelDialog from "./create-channel-dialog";
-import { User, Workplace } from "@/types/app";
+import { Channel, User, Workplace } from "@/types/app";
+import { useRouter } from "next/navigation";
 
 const InfoSection: FC<{
   userData: User;
   currentWorkplacedata: Workplace;
-}> = ({ userData, currentWorkplacedata }) => {
-  const [isChannelCollapse, setIsChannelCollapse] = useState(false);
-  const [isDMCollapse, setIsDMCollapse] = useState(false);
+  userWorkPlaceChannels: Channel[];
+  currentChannelId: string;
+}> = ({
+  userData,
+  currentWorkplacedata,
+  userWorkPlaceChannels,
+  currentChannelId,
+}) => {
+  const [isChannelCollapse, setIsChannelCollapse] = useState(true);
+  const [isDMCollapse, setIsDMCollapse] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const router = useRouter();
+
+  const navigatetoChannel = (channelId: string) => {
+    const url = `/workplace/${currentWorkplacedata.id}/channels/${channelId}`;
+    router.push(url);
+  };
   return (
     <div
       className={cn(
@@ -42,21 +57,26 @@ const InfoSection: FC<{
               </div>
             </div>
             <CollapsibleContent>
-              <Typography
-                varient="p"
-                text="# 1 channel"
-                className={cn("px-2 py-1 rounded-sm cursor-pointer")}
-              />
-              <Typography
-                varient="p"
-                text="# 2 channel"
-                className={cn("px-2 py-1 rounded-sm cursor-pointer")}
-              />
-              <Typography
-                varient="p"
-                text="# 3 channel"
-                className={cn("px-2 py-1 rounded-sm cursor-pointer")}
-              />
+              {userWorkPlaceChannels.length === 0 ? (
+                <Typography
+                  varient="p"
+                  text="Please add new channels."
+                  className=" text-center text-gray-500"
+                />
+              ) : (
+                userWorkPlaceChannels.map((channel) => {
+                  const activeChannel = currentChannelId === channel.id;
+                  return (
+                    <Typography
+                      onClick={() => navigatetoChannel(channel.id)}
+                      key={channel.id}
+                      varient="p"
+                      text={`# ${channel.name}`}
+                      className={cn("px-2 py-1 rounded-sm cursor-pointer")}
+                    />
+                  );
+                })
+              )}
             </CollapsibleContent>
           </Collapsible>
         </div>

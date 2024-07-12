@@ -23,3 +23,12 @@ export type Workplace = {
     slug: string
     super_admin: string
   }
+
+export type Channel = {
+    id: string
+    members: string[] | null
+    name: string
+    regulator: string[] | null
+    user_id: string
+    workplace_id: string
+  }

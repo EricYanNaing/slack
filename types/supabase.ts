@@ -150,6 +150,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_channels_to_workplace: {
+        Args: {
+          channel_id: string
+          workplace_id: string
+        }
+        Returns: undefined
+      }
       add_user_to_workplace: {
         Args: {
           user_id: string
