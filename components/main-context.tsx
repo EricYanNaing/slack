@@ -21,7 +21,7 @@ const MainContent: FC<{ children: ReactNode }> = ({ children }) => {
     >
       <main
         className={cn(
-          "md:ml-[290px] text-black lg:ml-[430px] md:h-full rounded-r-xl overflow-y-scroll [&::webkit-scrollbar-thumb]:rounded-[6px] [&::webkit-scrollbar-thumb]:bg-foreground/60 [&::webkit-scrollbar-track]:bg-none [&::webkit-scrollbar-thumb]:w-2",
+          "md:ml-[290px] text-black lg:ml-[430px] md:h-full rounded-r-xl overflow-y-scroll ",
           theme === "dark" ? "bg-[#232529]" : "bg-slate-200"
         )}
       >

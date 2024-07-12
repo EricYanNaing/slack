@@ -36,7 +36,9 @@ const Workplace = async ({
   );
 
   if (userworkPlaceChannels.length) {
-    redirect(`/${workplaceId}/channels/${userworkPlaceChannels[0].id}`);
+    redirect(
+      `/workplace/${workplaceId}/channels/${userworkPlaceChannels[0].id}`
+    );
   }
   return (
     <>
