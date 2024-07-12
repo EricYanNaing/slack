@@ -3,7 +3,9 @@ import {
   getCurrentWorkPlaceData,
   getUserWorkPlaceData,
 } from "@/actions/workplaces";
+import InfoSection from "@/components/infosection";
 import SideBar from "@/components/sideBar";
+import Typography from "@/components/ui/typography";
 import { Workplace as UserWorkPlace } from "@/types/app";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -31,6 +33,12 @@ const Workplace = async ({ params: { id } }: { params: { id: string } }) => {
           userData={userData}
           userWorkPlaceData={userWorkplaceData as UserWorkPlace[]}
         />
+        <InfoSection />
+        Workplace
+        <Typography varient="p" text="Hello" />
+        <Typography varient="p" text="Hello" />
+        <Typography varient="p" text="Hello" />
+        <Typography varient="p" text="Hello" />
       </div>
       <div className="md:hidden min-h-screen block">Mobile</div>
     </>
