@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -9,10 +9,16 @@ import {
 } from "./ui/collapsible";
 import { FaArrowDown, FaArrowUp, FaPlus } from "react-icons/fa";
 import Typography from "./ui/typography";
+import CreateChannelDialog from "./create-channel-dialog";
+import { User, Workplace } from "@/types/app";
 
-const InfoSection = () => {
+const InfoSection: FC<{
+  userData: User;
+  currentWorkplacedata: Workplace;
+}> = ({ userData, currentWorkplacedata }) => {
   const [isChannelCollapse, setIsChannelCollapse] = useState(false);
   const [isDMCollapse, setIsDMCollapse] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   return (
     <div
       className={cn(
@@ -32,7 +38,7 @@ const InfoSection = () => {
                 <Typography varient="p" text="Channels" className="font-bold" />
               </CollapsibleTrigger>
               <div className={cn("cursor-pointer p-2 rounded-full")}>
-                <FaPlus />
+                <FaPlus onClick={() => setDialogOpen(true)} />
               </div>
             </div>
             <CollapsibleContent>
@@ -80,6 +86,12 @@ const InfoSection = () => {
           </Collapsible>
         </div>
       </div>
+      <CreateChannelDialog
+        setDialogOpen={setDialogOpen}
+        dialogOpen={dialogOpen}
+        workplaceId={currentWorkplacedata.id}
+        userId={userData.id}
+      />
     </div>
   );
 };

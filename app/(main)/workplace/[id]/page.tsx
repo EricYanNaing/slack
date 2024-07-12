@@ -33,7 +33,7 @@ const Workplace = async ({ params: { id } }: { params: { id: string } }) => {
           userData={userData}
           userWorkPlaceData={userWorkplaceData as UserWorkPlace[]}
         />
-        <InfoSection />
+        <InfoSection currentWorkplacedata={currentWorkPlaceData} userData={userData} />
         Workplace
         <Typography varient="p" text="Hello" />
         <Typography varient="p" text="Hello" />
