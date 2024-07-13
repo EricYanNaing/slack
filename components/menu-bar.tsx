@@ -43,7 +43,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             theme={resolvedTheme}
             data={data}
             onEmojiSelect={(emoji: any) =>
-              emoji.chain().focus().insertContent(emoji.native).run()
+              editor.chain().focus().insertContent(emoji.native).run()
             }
           />
         </PopoverContent>

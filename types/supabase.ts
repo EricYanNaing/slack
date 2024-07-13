@@ -51,6 +51,64 @@ export type Database = {
           },
         ]
       }
+      messages: {
+        Row: {
+          channel_id: string | null
+          content: string | null
+          created_at: string
+          file_url: string | null
+          id: string
+          is_deleted: boolean | null
+          updated_at: string | null
+          user_id: string
+          workplace_id: string | null
+        }
+        Insert: {
+          channel_id?: string | null
+          content?: string | null
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          is_deleted?: boolean | null
+          updated_at?: string | null
+          user_id?: string
+          workplace_id?: string | null
+        }
+        Update: {
+          channel_id?: string | null
+          content?: string | null
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          is_deleted?: boolean | null
+          updated_at?: string | null
+          user_id?: string
+          workplace_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_workplace_id_fkey"
+            columns: ["workplace_id"]
+            isOneToOne: false
+            referencedRelation: "workplaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       users: {
         Row: {
           avatar_url: string
