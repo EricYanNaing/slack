@@ -25,7 +25,8 @@ import { toast } from "sonner";
 type ChatFileUploadProps = {
   userData: User;
   workplaceData: Workplace;
-  channel: Channel;
+  channel?: Channel;
+  recipientId?: string;
   toggleFileUploadModal: () => void;
 };
 
@@ -45,6 +46,7 @@ const ChatFileUpload: FC<ChatFileUploadProps> = ({
   channel,
   workplaceData,
   userData,
+  recipientId,
   toggleFileUploadModal,
 }) => {
   const [isUploading, setIsUploading] = useState(false);
@@ -89,18 +91,33 @@ const ChatFileUpload: FC<ChatFileUploadProps> = ({
 
     let messageInsertError;
 
-    const { data: channelMessageData, error: cmError } = await supabase
-      .from("messages")
-      .insert({
-        file_url: data.path,
-        user_id: userData.id,
-        channel_id: channel?.id,
-        workspace_id: workplaceData.id,
-      });
+    if (recipientId) {
+      const { data: diretMessageData, error: dmError } = await supabase
+        .from("direct_messages")
+        .insert({
+          file_url: data.path,
+          user: userData.id,
+          user_one: userData.id,
+          user_two: recipientId,
+        });
 
-    if (error) {
+      messageInsertError = dmError;
+    } else {
+      const { data: channelMessageData, error: cmError } = await supabase
+        .from("messages")
+        .insert({
+          file_url: data.path,
+          user_id: userData.id,
+          channel_id: channel?.id,
+          workspace_id: workplaceData.id,
+        });
+
+      messageInsertError = cmError;
+    }
+
+    if (messageInsertError) {
       console.log("Error inserting message", messageInsertError);
-      return { error: error.message };
+      return { error: messageInsertError.message };
     }
 
     setIsUploading(false);

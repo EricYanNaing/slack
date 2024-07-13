@@ -17,7 +17,7 @@ const InfoSection: FC<{
   userData: User;
   currentWorkplacedata: Workplace;
   userWorkPlaceChannels: Channel[];
-  currentChannelId: string;
+  currentChannelId: string | undefined;
 }> = ({
   userData,
   currentWorkplacedata,

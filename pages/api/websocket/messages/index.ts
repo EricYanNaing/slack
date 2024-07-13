@@ -1,8 +1,9 @@
 import { getUserDataPages } from "@/actions/get-user-data";
 import supabaseServerClientPages from "@/lib/supabase/supabaseServerPages";
-import { NextApiRequest, NextApiResponse } from "next";
+import { SockerIoApiResponse } from "@/types/app";
+import { NextApiRequest } from "next";
 
-export default async function handler  (req:NextApiRequest,res:NextApiResponse)  {
+export default async function handler  (req:NextApiRequest,res:SockerIoApiResponse)  {
     if(req.method !== 'POST'){
         return res.status(405).json({messge : 'Method not allowed.'})
     }
@@ -42,7 +43,7 @@ export default async function handler  (req:NextApiRequest,res:NextApiResponse) 
             content,
             file_url : fileUrl,
 
-        }).select('*,user: user_id(*)').single();
+        }).select('*,user: user_id(*)').order('created_at',{ascending : true}).single();
 
         if(createMessageError){
         return res.status(500).json({messge : 'Internal Server Error.'})
@@ -50,6 +51,9 @@ export default async function handler  (req:NextApiRequest,res:NextApiResponse) 
 
 
         // insert message success.
+
+        res?.socket?.server?.io?.emit(`channel:${channelId}:channel-messages`,data);
+
         return res.status(201).json({message : 'Message created.',data});
 
 

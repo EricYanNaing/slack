@@ -22,7 +22,7 @@ import { FaPencilAlt, FaRegCalendarCheck } from "react-icons/fa";
 
 type SideBarProps = {
   userWorkPlaceData: Workplace[];
-  currentWorkPlaceData: Workplace[];
+  currentWorkPlaceData: Workplace;
   userData: User;
 };
 

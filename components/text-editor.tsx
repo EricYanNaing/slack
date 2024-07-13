@@ -21,10 +21,11 @@ import ChatFileUpload from "./chat-file-upload";
 
 type TextEditorProps = {
   apiUrl: string;
-  type: "channel" | "directMessage";
-  channel: Channel;
+  type: "Channel" | "DirectMessage";
+  channel?: Channel;
   workplaceData: Workplace;
   userData: User;
+  recipientId?: string;
 };
 
 const TextEditor: FC<TextEditorProps> = ({
@@ -33,6 +34,7 @@ const TextEditor: FC<TextEditorProps> = ({
   channel,
   workplaceData,
   userData,
+  recipientId,
 }) => {
   const [content, setContent] = useState("");
   const [fileUploadModal, setFileUploadModal] = useState(false);
@@ -46,7 +48,7 @@ const TextEditor: FC<TextEditorProps> = ({
       StarterKit,
       PlaceHolder.configure({
         placeholder: `Message #${
-          type === "channel" ? channel.name : "username"
+          type === "Channel" ? channel?.name : "username"
         }`,
       }),
     ],
@@ -61,12 +63,20 @@ const TextEditor: FC<TextEditorProps> = ({
   const handleSend = async () => {
     if (content.length < 2) return;
     try {
-      await axios.post(
-        `${apiUrl}?channelId=${channel?.id}&workplaceId=${workplaceData.id}`,
-        {
-          content,
-        }
-      );
+      const payload = {
+        content,
+        type,
+      };
+
+      let endpoint = apiUrl;
+
+      if (type === "Channel" && channel) {
+        endpoint += `?channelId=${channel.id}&workplaceId=${workplaceData.id}`;
+      } else if (type === "DirectMessage" && recipientId) {
+        endpoint += `?recipientId=${recipientId}&workplaceId=${workplaceData.id}`;
+      }
+
+      await axios.post(endpoint, payload);
 
       setContent("");
       editor?.commands.setContent("");
@@ -115,6 +125,7 @@ const TextEditor: FC<TextEditorProps> = ({
             userData={userData}
             workplaceData={workplaceData}
             channel={channel}
+            recipientId={recipientId}
             toggleFileUploadModal={toggleFileUploadModal}
           />
         </DialogContent>

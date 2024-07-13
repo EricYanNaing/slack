@@ -4,6 +4,7 @@ import {
   getCurrentWorkPlaceData,
   getUserWorkPlaceData,
 } from "@/actions/workplaces";
+import ChatGroup from "@/components/chat-group";
 import ChatHeader from "@/components/ChatHeader";
 import InfoSection from "@/components/infosection";
 import SideBar from "@/components/sideBar";
@@ -44,36 +45,25 @@ const ChannelId = async ({
 
   return (
     <div className="hidden md:block">
-      <div className="h-[calc(100vh-256px)] overflow-y-auto [&::webkit-scrollbar-thumb]:rounded-[6px] [&::webkit-scrollbar-thumb]:bg-foreground/60 [&::webkit-scrollbar-track]:bg-none [&::webkit-scrollbar-thumb]:w-2">
-        <SideBar
-          currentWorkPlaceData={currentWorkPlaceData}
-          userData={userData}
-          userWorkPlaceData={userWorkplaceData as UserWorkPlace[]}
-        />
-        <InfoSection
-          currentWorkplacedata={currentWorkPlaceData}
-          userData={userData}
-          userWorkPlaceChannels={userworkPlaceChannels}
-          currentChannelId={channelId}
-        />
-        <div className="p-4 relative w-full overflow-hidden">
-          <ChatHeader title={currentChannelData.name} />
-
-          <div className="mt-10">
-            <Typography text="Chat Content" varient="h4" />
-          </div>
-        </div>
-      </div>
-
-      <div className="m-4">
-        <TextEditor
-          apiUrl="/api/websocket/messages"
-          type="channel"
-          channel={currentChannelData}
-          workplaceData={currentWorkPlaceData}
-          userData={userData}
-        />
-      </div>
+      <ChatGroup
+        type="Channel"
+        userData={userData}
+        currentChannelData={currentChannelData}
+        currentWorkplaceData={currentWorkPlaceData}
+        slug={workplaceId}
+        chatId={channelId}
+        userWorkplaceChannels={userworkPlaceChannels}
+        socketUrl="/api/websocket/messages"
+        socketQuery={{
+          channelId: currentChannelData.id,
+          workplaceId: currentWorkPlaceData.id,
+        }}
+        apiUrl="/api/messages"
+        headerTitle={currentChannelData.name}
+        paramKey="channelId"
+        paramValue={channelId}
+        userWorkplaceData={userWorkplaceData as UserWorkPlace[]}
+      />
     </div>
   );
 };
