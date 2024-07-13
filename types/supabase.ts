@@ -11,26 +11,29 @@ export type Database = {
     Tables: {
       channels: {
         Row: {
+          created_at: string
           id: string
           members: string[] | null
           name: string
-          regulator: string[] | null
+          regulators: string[] | null
           user_id: string
           workplace_id: string
         }
         Insert: {
+          created_at?: string
           id?: string
           members?: string[] | null
           name: string
-          regulator?: string[] | null
+          regulators?: string[] | null
           user_id: string
           workplace_id: string
         }
         Update: {
+          created_at?: string
           id?: string
           members?: string[] | null
           name?: string
-          regulator?: string[] | null
+          regulators?: string[] | null
           user_id?: string
           workplace_id?: string
         }
@@ -58,7 +61,7 @@ export type Database = {
           created_at: string
           file_url: string | null
           id: string
-          is_deleted: boolean | null
+          is_deleted: boolean
           updated_at: string | null
           user_id: string
           workplace_id: string | null
@@ -69,7 +72,7 @@ export type Database = {
           created_at?: string
           file_url?: string | null
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           updated_at?: string | null
           user_id?: string
           workplace_id?: string | null
@@ -80,7 +83,7 @@ export type Database = {
           created_at?: string
           file_url?: string | null
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           updated_at?: string | null
           user_id?: string
           workplace_id?: string | null

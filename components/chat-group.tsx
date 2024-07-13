@@ -7,6 +7,7 @@ import SideBar from "./sideBar";
 import Typography from "./ui/typography";
 import { Channel, User, Workplace } from "@/types/app";
 import TextEditor from "./text-editor";
+import ChatMessages from "./chat-messages";
 
 type ChatGroupProps = {
   type: "Channel" | "DirectMessage";
@@ -61,7 +62,19 @@ const ChatGroup: FC<ChatGroupProps> = ({
           <ChatHeader title={headerTitle} chatId={chatId} userData={userData} />
 
           <div className="mt-10">
-            <Typography text="Chat Content" varient="h4" />
+            <ChatMessages
+              userData={userData}
+              name={currentChannelData?.name ?? "Username"}
+              workPlaceData={currentWorkplaceData}
+              chatId={chatId}
+              type={type}
+              apiUrl={apiUrl}
+              socketUrl={socketUrl}
+              socketQuery={socketQuery}
+              paramKey={paramKey}
+              paramValue={paramValue}
+              channelData={currentChannelData}
+            />
           </div>
         </div>
       </div>

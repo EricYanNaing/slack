@@ -32,9 +32,22 @@ export type Channel = {
     id: string
     members: string[] | null
     name: string
-    regulator: string[] | null
+    regulators: string[] | null
     user_id: string
     workplace_id: string
+    created_at: string
+  }
+
+  export type Messages = {
+    channel_id: string | null
+    content: string | null
+    created_at: string
+    file_url: string | null
+    id: string
+    is_deleted: boolean
+    updated_at: string | null
+    user_id: string
+    workplace_id: string | null
   }
 
   export type SockerIoApiResponse = NextApiResponse & {
@@ -44,3 +57,5 @@ export type Channel = {
       };
     };
   };
+
+  export type MessageWithUser = Messages & { user: User };
