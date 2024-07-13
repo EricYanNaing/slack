@@ -15,6 +15,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useRouter } from "next/navigation";
 import Progressbar from "./progressbar";
 import { cn } from "@/lib/utils";
+import { Copy } from "lucide-react";
+import { toast } from "sonner";
 
 type SideBarNavProps = {
   userWorkPlaceData: Workplace[];
@@ -32,6 +34,17 @@ const SideBarNav: FC<SideBarNavProps> = ({
     router.push(`/workplace/${id}`);
     setSwitchingWorkplace(false);
   };
+
+  const copyInviteLink = (inviteCode: string) => {
+    const currentDomain = window.location.origin;
+
+    navigator.clipboard.writeText(
+      `${currentDomain}/create-workplace/${inviteCode}`
+    );
+
+    toast.success("Invite link copied to clipboard");
+  };
+
   return (
     <nav>
       <ul className="flex flex-col space-y-4 ">
@@ -62,8 +75,13 @@ const SideBarNav: FC<SideBarNavProps> = ({
                     return (
                       <div
                         key={workplace.id}
-                        className={cn(isActive ? 'bg-neutral-700' : 'hover:bg-neutral-700','hover:opacity-70 px-2 py-1 flex gap-2')}
-                        onClick={() => switchWorkPlace(workplace.id)}
+                        className={cn(
+                          isActive ? "bg-neutral-700" : "hover:bg-neutral-700",
+                          "hover:opacity-70 px-2 py-1 flex gap-2"
+                        )}
+                        onClick={() =>
+                          !isActive && switchWorkPlace(workplace.id)
+                        }
                       >
                         <Avatar>
                           <AvatarImage
@@ -84,11 +102,19 @@ const SideBarNav: FC<SideBarNavProps> = ({
                             className="text-sm"
                             text={workplace.name}
                           />
-                          <Typography
-                            varient="p"
-                            className="text-xs lg:text-xs"
-                            text={workplace.invite_code || ""}
-                          />
+                          <div className="flex items-center gap-x-2">
+                            <Typography
+                              varient="p"
+                              className="text-xs lg:text-xs"
+                              text="Copy Invite Link"
+                            />
+                            <Copy
+                              onClick={() =>
+                                copyInviteLink(workplace.invite_code!)
+                              }
+                              size={18}
+                            />
+                          </div>
                         </div>
                       </div>
                     );

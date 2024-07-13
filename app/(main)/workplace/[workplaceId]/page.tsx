@@ -35,11 +35,12 @@ const Workplace = async ({
     userData.id
   );
 
-  if (userworkPlaceChannels.length) {
-    redirect(
-      `/workplace/${workplaceId}/channels/${userworkPlaceChannels[0].id}`
-    );
-  }
+  // if (userworkPlaceChannels.length) {
+  //   redirect(
+  //     `/workplace/${workplaceId}/channels/${userworkPlaceChannels[0].id}`
+  //   );
+  // }
+
   return (
     <>
       <div className="hidden md:block">

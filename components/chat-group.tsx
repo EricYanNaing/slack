@@ -8,6 +8,7 @@ import Typography from "./ui/typography";
 import { Channel, User, Workplace } from "@/types/app";
 import TextEditor from "./text-editor";
 import ChatMessages from "./chat-messages";
+import SearchBar from "./search-bar";
 
 type ChatGroupProps = {
   type: "Channel" | "DirectMessage";
@@ -57,6 +58,11 @@ const ChatGroup: FC<ChatGroupProps> = ({
           currentChannelId={
             type === "Channel" ? currentChannelData?.id : undefined
           }
+        />
+        <SearchBar
+          currentWorkplaceData={currentWorkplaceData}
+          currentChannelData={currentChannelData}
+          loggedInUserId={userData.id}
         />
         <div className="p-4 relative w-full overflow-hidden">
           <ChatHeader title={headerTitle} chatId={chatId} userData={userData} />

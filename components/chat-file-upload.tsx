@@ -109,7 +109,7 @@ const ChatFileUpload: FC<ChatFileUploadProps> = ({
           file_url: data.path,
           user_id: userData.id,
           channel_id: channel?.id,
-          workspace_id: workplaceData.id,
+          workplace_id: workplaceData.id,
         });
 
       messageInsertError = cmError;
@@ -153,7 +153,7 @@ const ChatFileUpload: FC<ChatFileUploadProps> = ({
                     <FormControl>
                       <Input
                         type="file"
-                        accept="image/*,application/pdf"
+                        accept="application/pdf,image/*"
                         {...imageRef}
                         placeholder="Choose a file"
                         onChange={(event) =>

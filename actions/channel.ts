@@ -39,15 +39,15 @@ export const createChannel = async ({name,workplaceId,userId} : {workplaceId : s
     }
 }
 
-const addChannelToUser= async (userId : string,channelId : string) => {
+export const addChannelToUser= async (userId : string,channelId : string) => {
     const supabase = await supabaseServerClient()
 
-    const {data : updateChannelData, error : updateChannelError } = await supabase.rpc('update_user_channels',{user_id : userId,channel_id : channelId })
+    const {data : addChannelData, error : addChannelError } = await supabase.rpc('update_user_channels',{user_id : userId,channel_id : channelId })
 
-    return [updateChannelData,updateChannelError]
+    return [addChannelData,addChannelError]
 }
 
-const updateChannelMembers = async ( userId : string, channelId :  string) => {
+export const updateChannelMembers = async ( userId : string, channelId :  string) => {
     const supabase = await supabaseServerClient()
 
     const {data : updateChannelData, error : updateChannelError } = await supabase.rpc('update_channels_members',{new_member : userId,channel_id : channelId })
@@ -55,10 +55,25 @@ const updateChannelMembers = async ( userId : string, channelId :  string) => {
     return [updateChannelData,updateChannelError]
 }
 
-const updateWorkPlaceChannel = async (  channelId :  string ,workPlaceId : string) => {
+export const updateWorkPlaceChannel = async (  channelId :  string ,workPlaceId : string) => {
     const supabase = await supabaseServerClient()
 
     const {data : updateWorkplaceData, error : updateWorkplaceError } = await supabase.rpc('add_channels_to_workplace',{ channel_id : channelId, workplace_id : workPlaceId })
 
     return [updateWorkplaceData,updateWorkplaceError]
 }
+
+export const updateChannelRegulators = async (
+    userId: string,
+    channelId: string
+  ) => {
+    const supabase = await supabaseServerClient();
+  
+    const { data: updateChannelData, error: updateChannelError } =
+      await supabase.rpc('update_channel_regulators', {
+        new_regulator: userId,
+        channel_id: channelId,
+      });
+  
+    return [updateChannelData, updateChannelError];
+  };

@@ -5,11 +5,6 @@ import {
   getUserWorkPlaceData,
 } from "@/actions/workplaces";
 import ChatGroup from "@/components/chat-group";
-import ChatHeader from "@/components/ChatHeader";
-import InfoSection from "@/components/infosection";
-import SideBar from "@/components/sideBar";
-import TextEditor from "@/components/text-editor";
-import Typography from "@/components/ui/typography";
 import { Workplace as UserWorkPlace } from "@/types/app";
 import { redirect } from "next/navigation";
 import React from "react";

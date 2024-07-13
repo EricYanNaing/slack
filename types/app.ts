@@ -21,7 +21,7 @@ export type Workplace = {
     id: string
     image_url: string | null
     invite_code: string | null
-    members: string[] | null
+    members: User[] | null
     name: string
     regulator: string[] | null
     slug: string

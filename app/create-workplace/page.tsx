@@ -65,7 +65,7 @@ const Step1 = () => {
       <form className="mt-4">
         <fieldset>
           <Input
-            className="text-black  border-gray-600"
+            className="text-white border-gray-600"
             type="text"
             value={name}
             placeholder="Enter your company name."
@@ -77,7 +77,7 @@ const Step1 = () => {
             className="mt-10 w-full"
             onClick={() => setCurrStep(2)}
           >
-            <Typography text="Next" varient="p" />
+            <Typography text="Next" className="text-white" varient="p" />
           </Button>
         </fieldset>
       </form>
@@ -139,7 +139,11 @@ const Step2 = () => {
                 handleSubmit();
               }}
             >
-              <Typography text="Skip for now." className="my-4" varient="p" />
+              <Typography
+                text="Skip for now."
+                className="my-4 text-white"
+                varient="p"
+              />
             </Button>
 
             {imageUrl ? (
@@ -149,7 +153,11 @@ const Step2 = () => {
                 onClick={handleSubmit}
                 size="sm"
               >
-                <Typography text="Submit" className="my-4" varient="p" />
+                <Typography
+                  text="Create Work Place"
+                  className="my-4 text-white"
+                  varient="p"
+                />
               </Button>
             ) : (
               <Button type="button" size="sm" className="bg-gray-300">
